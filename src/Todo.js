@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 function Todo(props) {
     const classes = useStyles();
     const [open, setOpen]  = useState(false);
-    const [input, setInput] = useSate('');
+    const [input, setInput] = useState();
     
     const handleOpen = () => {
         setOpen(true);
@@ -39,7 +39,8 @@ function Todo(props) {
     const updateTodo = () =>{
         db.collection('todos').doc(props.text.id).set({
             todo: input
-        }, { merge: true})
+        }, { merge: true});
+        
         setOpen(false);
     }
 
@@ -51,7 +52,7 @@ function Todo(props) {
         >
             <div className={classes.paper}>
                 <h1>modal</h1>
-                <input value={input} onChange={event => setInput(event.target.value)}/>
+                <input placeholder={props.text.todo} value={input} onChange={event => setInput(event.target.value)}/>
                 <Button onClick={updateTodo}>Update Todo</Button>
             </div>
         </Modal>
